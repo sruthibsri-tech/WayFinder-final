@@ -1,0 +1,765 @@
+@import "tailwindcss";
+
+/* =========================================================
+   WAYFINDER — GLOBAL THEME
+   ========================================================= */
+
+:root {
+  --background: #eef5f6;
+  --panel: #ffffff;
+  --panel-2: #edf4f5;
+  --border: #c8d7dc;
+
+  --foreground: #06182d;
+  --muted: #587080;
+
+  --accent: #00877f;
+  --accent-2: #087b9c;
+
+  --danger: #e11d48;
+  --warn: #d97706;
+  --ok: #16a34a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-border: var(--border);
+
+  --color-muted: var(--muted);
+
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+
+  --color-danger: var(--danger);
+  --color-warn: var(--warn);
+  --color-ok: var(--ok);
+
+  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans);
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+html {
+  background: var(--background);
+}
+
+body {
+  margin: 0;
+
+  background: var(--background);
+
+  color: var(--foreground);
+
+  font-family:
+    var(--font-geist-sans),
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+}
+
+
+/* =========================================================
+   HEADER — DEFAULT / DASHBOARD
+   ========================================================= */
+
+/*
+  IMPORTANT:
+  The header stays in normal document flow everywhere
+  except the landing page.
+
+  This prevents the dashboard header from overlapping
+  shipment information and cards.
+*/
+
+.site-header {
+  position: relative;
+
+  z-index: 50;
+
+  width: 100%;
+
+  background:
+    rgba(247, 251, 251, 0.90);
+
+  border-bottom:
+    1px solid
+    rgba(6, 24, 45, 0.07);
+
+  backdrop-filter:
+    blur(14px);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER LINKS
+   ========================================================= */
+
+.header-link {
+  color: var(--foreground);
+
+  font-size: 0.95rem;
+
+  font-weight: 400;
+
+  letter-spacing: -0.01em;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.header-link:hover {
+  color: var(--accent);
+}
+
+
+/* =========================================================
+   LANDING PAGE HEADER
+   ========================================================= */
+
+/*
+  On the landing page ONLY:
+  the header becomes transparent and sits
+  directly over the hero image.
+
+  The :has() rule means you don't have to change
+  the Header component just for styling.
+*/
+
+.landing-page .site-header,
+body:has(.landing-hero) .site-header {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+
+  z-index: 100;
+
+  background: transparent;
+
+  border-bottom:
+    1px solid
+    rgba(255, 255, 255, 0.14);
+
+  backdrop-filter: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   LANDING HERO
+   ========================================================= */
+
+.landing-hero {
+  position: relative;
+
+  isolation: isolate;
+
+  overflow: hidden;
+
+  min-height: 100vh;
+
+  /*
+    IMPORTANT:
+    The image is visible across the entire screen,
+    including behind the header and on the left.
+
+    The overlay is intentionally light.
+  */
+
+  background:
+    linear-gradient(
+      100deg,
+
+      rgba(247, 250, 250, 0.48) 0%,
+
+      rgba(244, 249, 250, 0.34) 25%,
+
+      rgba(214, 234, 240, 0.16) 55%,
+
+      rgba(9, 58, 85, 0.035) 100%
+    ),
+
+    url("/hero-maritime.png")
+      center center
+      / cover
+      no-repeat;
+}
+
+
+/* =========================================================
+   HERO SUBTLE OVERLAY
+   ========================================================= */
+
+.landing-hero::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: -1;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+
+      rgba(255, 255, 255, 0.05) 0%,
+
+      transparent 42%,
+
+      rgba(0, 47, 72, 0.08) 100%
+    );
+}
+
+
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
+.landing-content {
+  position: relative;
+
+  min-height: 100vh;
+
+  box-sizing: border-box;
+
+  /*
+    Gives the hero content enough room below
+    the transparent navigation.
+  */
+
+  padding-top: 120px;
+}
+
+
+/* =========================================================
+   HERO TITLE
+   ========================================================= */
+
+.hero-title {
+  font-size:
+    clamp(
+      2.5rem,
+      4vw,
+      4rem
+    );
+
+  font-weight: 450;
+
+  letter-spacing: -0.045em;
+
+  line-height: 1.04;
+
+  color: var(--foreground);
+
+  margin: 0;
+}
+
+.hero-title span {
+  color: var(--accent);
+}
+
+
+/* =========================================================
+   HERO DESCRIPTION
+   ========================================================= */
+
+.hero-description {
+  margin-top: 18px;
+
+  max-width: 500px;
+
+  font-size: 1.12rem;
+
+  font-weight: 400;
+
+  line-height: 1.6;
+
+  color: #294662;
+}
+
+
+/* =========================================================
+   HERO OPTIONS / CTA CARDS
+   ========================================================= */
+
+.hero-option {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding:
+    15px
+    20px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.72);
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.78);
+
+  box-shadow:
+    0 8px 25px
+    rgba(4, 36, 56, 0.08);
+
+  color: var(--foreground);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.hero-option:hover {
+  transform:
+    translateY(-2px);
+
+  background:
+    rgba(255, 255, 255, 0.93);
+
+  box-shadow:
+    0 12px 30px
+    rgba(4, 36, 56, 0.11);
+}
+
+
+/* =========================================================
+   HERO OPTION ICON
+   ========================================================= */
+
+.hero-option-icon {
+  display: grid;
+
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  width: 56px;
+
+  height: 56px;
+
+  border-radius: 999px;
+
+  background:
+    var(--accent);
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   HERO OPTION TEXT
+   ========================================================= */
+
+.hero-option strong {
+  display: block;
+
+  font-size: 0.98rem;
+
+  font-weight: 500;
+
+  letter-spacing: -0.02em;
+
+  line-height: 1.2;
+}
+
+.hero-option small {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #294662;
+
+  font-size: 0.84rem;
+
+  font-weight: 400;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   HERO STATUS
+   ========================================================= */
+
+.hero-status {
+  position: absolute;
+
+  bottom: 24px;
+
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 400;
+
+  text-shadow:
+    0 1px 8px
+    rgba(0, 33, 55, 0.4);
+
+  white-space: nowrap;
+}
+
+.hero-status > span:first-child {
+  padding:
+    6px
+    11px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(0, 48, 73, 0.32);
+
+  backdrop-filter:
+    blur(8px);
+}
+
+.hero-status i {
+  display: inline-block;
+
+  width: 8px;
+
+  height: 8px;
+
+  margin-right: 6px;
+
+  border-radius: 50%;
+
+  background: #67ddb3;
+}
+
+.hero-status b {
+  display: block;
+
+  width: 1px;
+
+  height: 20px;
+
+  background:
+    rgba(255, 255, 255, 0.5);
+}
+
+
+/* =========================================================
+   ASSISTANT SURFACE
+   ========================================================= */
+
+.assistant-surface {
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.80);
+
+  border-radius: 22px;
+
+  background:
+    rgba(248, 252, 252, 0.84);
+
+  box-shadow:
+    0 18px 45px
+    rgba(4, 36, 56, 0.11);
+
+  backdrop-filter:
+    blur(12px);
+}
+
+
+/* =========================================================
+   ANALYSIS STAGE
+   ========================================================= */
+
+.analysis-stage {
+  background:
+    linear-gradient(
+      135deg,
+      #e7f1f2,
+      #f8fbfb 52%,
+      #e0eef1
+    );
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+/*
+  The dashboard/header now stays properly separated.
+
+  No absolute positioning here.
+*/
+
+.dashboard-shell {
+  position: relative;
+
+  min-height:
+    calc(100vh - 7rem);
+
+  width: 100%;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   DASHBOARD CARDS
+   ========================================================= */
+
+.dashboard-shell > * {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 9px;
+
+  height: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d8dd;
+
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+/* =========================================================
+   FONT UTILITIES
+   ========================================================= */
+
+.mono {
+  font-family:
+    var(--font-geist-mono),
+    ui-monospace,
+    monospace;
+}
+
+.serif {
+  font-family:
+    var(--font-serif),
+    Georgia,
+    "Times New Roman",
+    serif;
+}
+
+
+/* =========================================================
+   PULSE ANIMATION
+   ========================================================= */
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow:
+      0 0 0 0
+      rgba(45, 212, 191, 0.35);
+  }
+
+  70% {
+    box-shadow:
+      0 0 0 6px
+      rgba(45, 212, 191, 0);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 0
+      rgba(45, 212, 191, 0);
+  }
+}
+
+.pulse-ring {
+  animation:
+    pulse-ring 1.6s infinite;
+}
+
+
+/* =========================================================
+   DEPENDENCY GRAPH
+   ========================================================= */
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+.edge-flow {
+  stroke-dasharray: 2 8;
+
+  animation:
+    dash-flow 1.1s linear infinite;
+}
+
+.dep-node {
+  cursor: pointer;
+
+  transition:
+    filter 0.15s ease;
+}
+
+.dep-node:hover {
+  filter: brightness(1.25);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .hero-title {
+    font-size:
+      clamp(
+        2.4rem,
+        5vw,
+        3.5rem
+      );
+  }
+
+  .hero-description {
+    font-size: 1.05rem;
+  }
+}
+
+
+@media (max-width: 900px) {
+
+  /*
+    Keep image visible on mobile,
+    but shift the ship slightly.
+  */
+
+  .landing-hero {
+    background-position:
+      60% center;
+  }
+
+  .landing-hero::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: -1;
+
+    pointer-events: none;
+
+    background:
+      rgba(248, 252, 252, 0.20);
+  }
+
+  .landing-content {
+    padding-top: 105px;
+  }
+
+  .hero-title {
+    font-size:
+      clamp(
+        2.25rem,
+        8vw,
+        3.2rem
+      );
+
+    line-height: 1.06;
+  }
+
+  .hero-description {
+    max-width: 440px;
+
+    font-size: 1rem;
+
+    line-height: 1.5;
+  }
+
+  .hero-status {
+    display: none;
+  }
+}
+
+
+@media (max-width: 640px) {
+
+  .landing-hero {
+    background-position:
+      63% center;
+  }
+
+  .landing-content {
+    padding-top: 95px;
+  }
+
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  .hero-option {
+    padding:
+      13px
+      16px;
+
+    gap: 12px;
+  }
+
+  .hero-option-icon {
+    width: 48px;
+
+    height: 48px;
+  }
+
+  .hero-option strong {
+    font-size: 0.92rem;
+  }
+
+  .hero-option small {
+    font-size: 0.78rem;
+  }
+}
